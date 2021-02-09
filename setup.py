@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.0.1",
     author="Maxy Seredovych",
     author_email="seredovichm@gmail.com",
-    description="small quizz game",
+    description="puzzle game",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=" ",
