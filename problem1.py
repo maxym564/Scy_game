@@ -85,3 +85,60 @@ def check_uniqueness_in_rows(board: list):
             el_in_row_set.add(num)
     return True
 
+def check_horizontal_visibility(board: list):
+    """
+    Check row-wise visibility (left-right and vice versa)
+
+    Return True if all horizontal hints are satisfiable,
+     i.e., for line 412453* , hint is 4, and 1245 are the four buildings
+      that could be observed from the hint looking to the right.
+
+    >>> check_horizontal_visibility(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    True
+    >>> check_horizontal_visibility(['***21**', '452453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    False
+    >>> check_horizontal_visibility(['***21**', '452413*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    False
+    """
+    board = board[1:len(board)-1]
+    for line in board:
+        if line[0].isdigit():
+            if not left_to_right_check(line,int(line[0])):
+                return False
+        if line[len(line)-1].isdigit():
+            if not left_to_right_check(line[::-1],int(line[len(line)-1])):
+                return False
+    return True
+
+
+
+
+def check_columns(board: list):
+    """
+    Check column-wise compliance of the board for uniqueness (buildings of unique height) and visibility (top-bottom and vice versa).
+
+    Same as for horizontal cases, but aggregated in one function for vertical case, i.e. columns.
+
+    >>> check_columns(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    True
+    >>> check_columns(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41232*', '*2*1***'])
+    False
+    >>> check_columns(['***21**', '412553*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    False
+    """
+    new_board = []
+    new_line = ''
+    for index in range(len(board)):
+        for line in board:
+            new_line += line[index]
+        new_board.append(new_line)
+        new_line = ''
+    if not check_uniqueness_in_rows(new_board):
+        return False
+    if not check_horizontal_visibility(new_board):
+        return False
+    return True
+
+
+
+
