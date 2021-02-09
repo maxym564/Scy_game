@@ -142,3 +142,33 @@ def check_columns(board: list):
 
 
 
+def check_skyscrapers(input_path: str):
+    """
+    Main function to check the status of skyscraper game board.
+    Return True if the board status is compliant with the rules,
+    False otherwise.
+
+    >>> check_skyscrapers("check.txt")
+    True
+    """
+    board = read_input(input_path)
+    total = []
+    total.append(check_not_finished_board(board))
+    total.append(check_uniqueness_in_rows(board))
+    total.append(check_horizontal_visibility(board))
+    total.append(check_columns(board))
+    if all(total):
+        return True
+    return False
+
+
+
+if __name__ == "__main__":
+    print(check_columns([
+    '***21**', 
+    '412453*', 
+    '423145*', 
+    '*542315', 
+    '*35214*', 
+    '*41532*', 
+    '*2*1***']))
