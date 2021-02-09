@@ -42,3 +42,46 @@ def left_to_right_check(input_line: str, pivot: int):
     return False
 
 
+def check_not_finished_board(board: list):
+    """
+    Check if skyscraper board is not finished, i.e., '?' present on the game board.
+
+    Return True if finished, False otherwise.
+
+    >>> check_not_finished_board(['***21**', '4?????*', '4?????*', '*?????5', '*?????*', '*?????*', '*2*1***'])
+    False
+    >>> check_not_finished_board(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    True
+    >>> check_not_finished_board(['***21**', '412453*', '423145*', '*5?3215', '*35214*', '*41532*', '*2*1***'])
+    False
+    """
+    for line in board:
+        for el in line:
+            if el == '?':
+                return False
+    return True
+
+
+def check_uniqueness_in_rows(board: list):
+    """
+    Check buildings of unique height in each row.
+
+    Return True if buildings in a row have unique length, False otherwise.
+
+    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    True
+    >>> check_uniqueness_in_rows(['***21**', '452453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    False
+    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*553215', '*35214*', '*41532*', '*2*1***'])
+    False
+    """
+    board = board[1:-1]
+    for line in board:
+        line = line[1:-1]
+        el_in_row_set = set()
+        for num in line:
+            if num in el_in_row_set:
+                return False
+            el_in_row_set.add(num)
+    return True
+
